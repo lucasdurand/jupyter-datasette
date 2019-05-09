@@ -10,6 +10,8 @@ import subprocess
 path = os.environ.get('DATASETTE_HOME',os.path.expanduser('~/Datasette'))
 datasette_host = os.environ.get('DATASETTE_HOST',None) # provide a static hostname to keep users happy
 
+import tools
+
 class DatasetteHolder():
     '''
     I hold and manage a Datasette server. I pick up changes to existing databases, 
@@ -35,6 +37,7 @@ class DatasetteHolder():
         self.port = self.get_available_port()
         cmd = f'datasette {files} --reload --port {self.port} --host 0.0.0.0'
         cmd = re.sub(' +', ' ', cmd)
+        # TODO: can we run this from a service that detects newly added files?
         self.process = subprocess.Popen(cmd.split(' '))
         self.pid = self.process.pid
         message = f"Launching Datasette at {self.path}"
