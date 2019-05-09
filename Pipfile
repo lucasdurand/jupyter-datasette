@@ -4,12 +4,12 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+jupyter = "*"
 
 [packages]
 jupyter-datasette = {editable = true,path = "."}
-jupyter = "*"
 datasette = "*"
-jinja2 = "*"
+jinja2 = ">=2.10.1"
 
 [requires]
 python_version = "3.6"
