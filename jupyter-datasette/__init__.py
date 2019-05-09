@@ -6,9 +6,15 @@ import socket
 import re
 import subprocess
 
-path = os.environ.get('DATASETTE_HOME',os.path.expanduser('~/'))
+# TODO: real config class for this
+path = os.environ.get('DATASETTE_HOME',os.path.expanduser('~/Datasette'))
+datasette_host = os.environ.get('DATASETTE_HOST',None) # provide a static hostname to keep users happy
 
 class DatasetteHolder():
+    '''
+    I hold and manage a Datasette server. I pick up changes to existing databases, 
+        but need to be reloaded to pick up new fils
+    '''
     def __init__(self, home):
         self.path=home
         self.launch()
@@ -25,13 +31,14 @@ class DatasetteHolder():
         self.launch()
 
     def launch(self):
-        print("Launching")
-        files = ' '.join([x for x in os.listdir(self.path) if x[-3:]=='.db'])
+        files = ' '.join([os.path.join(self.path,x) for x in os.listdir(self.path) if x[-3:]=='.db'])
         self.port = self.get_available_port()
         cmd = f'datasette {files} --reload --port {self.port} --host 0.0.0.0'
         cmd = re.sub(' +', ' ', cmd)
         self.process = subprocess.Popen(cmd.split(' '))
         self.pid = self.process.pid
+        message = f"Launching Datasette at {self.path}"
+        return message
 
     def kill(self):
         self.process.kill()
@@ -46,9 +53,11 @@ class DatasetteHandler(IPythonHandler):
 
         if self.get_arguments('reload'):
             datasette.reload()
-
-        port = datasette.port
-        self.write(json.dumps({'port':port,'localurl':f'http://localhost:{port}'}))
+        else:
+            port = datasette.port
+            host = datasette_host if datasette_host else socket.gethostbyname(socket.gethostname())
+            self.redirect(f'http://{host}:{port}')
+            #self.write(json.dumps({'port':port,'localurl':f'http://localhost:{port}'}))
 
 def _jupyter_server_extension_paths():
     """
