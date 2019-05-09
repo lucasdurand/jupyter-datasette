@@ -1,17 +1,34 @@
 define(['jquery', 'base/js/utils'], function ($, utils) {
 
+    function reload () {
+        // call ?reload on /datasette
+        var base_url = utils.get_body_data('baseUrl');
+        $.get(`${base_url}/datasette?reload`, success= function(resp){                // refresh iframe
+            alert("Now we refresh");
+            $("#datasette_iframe").attr('src',$("#datasette_iframe").attr('src'));
+        })
+    }
+
     function insert_tab () {
         var tab_text = 'Datasette';
         var tab_id = 'datasette_embed';
         var base_url = utils.get_body_data('baseUrl');
+
+        var datasette_refresh = $('<button/>')
+            .text("New Files? Reload Datasette")
+            .addClass('btn btn-default')
+            .on('click', reload());
+
+
         var datasette_ui = $('<iframe/>')
             .attr('id','datasette_iframe')
             .attr('src',`${base_url}/datasette`)
-            .attr('style','height:90vh;border:None;')
-            .attr('width','100%')
+            .attr('style','height:85vh;border:None;')
+            .attr('width','100%');
 
         $('<div/>')
             .attr('id', tab_id)
+            .append(datasette_refresh)
             .append(datasette_ui)
             .addClass('tab-pane')
             .appendTo('.tab-content');
