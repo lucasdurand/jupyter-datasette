@@ -10,6 +10,8 @@ jupyter = "*"
 jupyter-datasette = {editable = true,path = "."}
 datasette = "*"
 jinja2 = ">=2.10.1"
+csvs-to-sqlite = "*"
+sqlite3 = "*"
 
 [requires]
 python_version = "3.6"
