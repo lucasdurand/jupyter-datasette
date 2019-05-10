@@ -47,7 +47,7 @@ def start_datasette(db_path, show_errors=True, **kwargs):
         if show_errors:
             for line in iter(process.stderr.readline, b''):
                 sys.stdout.write(line)
-                    f.write(line)
+                f.write(line)
         else:
             return process.pid, process, port
     except: #catch KeyboardInterrupt and whatever other calamity might befall our process
