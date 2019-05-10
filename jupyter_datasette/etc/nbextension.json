@@ -1,6 +1,6 @@
 {
   "load_extensions": {
-     "nbresuse/main": true
+     "jupyter-datasette/main": true
   }
 }
 
