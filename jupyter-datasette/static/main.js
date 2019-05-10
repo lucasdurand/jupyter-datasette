@@ -3,8 +3,8 @@ define(['jquery', 'base/js/utils'], function ($, utils) {
     function reload () {
         // call ?reload on /datasette
         var base_url = utils.get_body_data('baseUrl');
-        $.get(`${base_url}/datasette?reload`, success= function(resp){                // refresh iframe
-            alert("Now we refresh");
+        $.get(`${base_url}/datasette?reload`, success= function(resp){                
+            // refresh iframe
             $("#datasette_iframe").attr('src',$("#datasette_iframe").attr('src'));
         })
     }

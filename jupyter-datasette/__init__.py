@@ -21,23 +21,19 @@ class DatasetteHolder():
         self.path=home
         self.launch()
 
-    def get_available_port(self):
-        tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        tcp.bind(('', 0))
-        addr, port = tcp.getsockname()
-        tcp.close()
-        return port
-
     def reload(self):
         self.kill()
         self.launch()
+        return
 
     def launch(self):
+        # TODO: clean this up to use the launcher from `tools`
         files = ' '.join([os.path.join(self.path,x) for x in os.listdir(self.path) if x[-3:]=='.db'])
-        self.port = self.get_available_port()
+        self.port = tools.find_free_port()
         cmd = f'datasette {files} --reload --port {self.port} --host 0.0.0.0'
         cmd = re.sub(' +', ' ', cmd)
         # TODO: can we run this from a service that detects newly added files?
+        # TODO: use pexpect so we're sure that it's `Goin' Fast` before we try and load the page
         self.process = subprocess.Popen(cmd.split(' '))
         self.pid = self.process.pid
         message = f"Launching Datasette at {self.path}"
