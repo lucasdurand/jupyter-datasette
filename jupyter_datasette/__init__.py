@@ -105,7 +105,7 @@ def load_jupyter_server_extension(nbapp):
     """
     Called during jupyter server start
     """
-    datasette = Datasette(datasette_path, jupyter=False)
+    datasette = Datasette(folder=datasette_path, jupyter=False)
     nbapp.web_app.datasette = datasette
     route_pattern = _url_path_join(nbapp.web_app.settings['base_url'], '/datasette')
     nbapp.web_app.add_handlers('.*', [(route_pattern, _DatasetteHandler)])
