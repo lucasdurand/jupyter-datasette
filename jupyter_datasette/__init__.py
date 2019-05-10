@@ -10,7 +10,7 @@ import subprocess
 path = os.environ.get('DATASETTE_HOME',os.path.expanduser('~/Datasette'))
 datasette_host = os.environ.get('DATASETTE_HOST',None) # provide a static hostname to keep users happy
 
-import tools
+from . import tools
 
 class DatasetteHolder():
     '''
