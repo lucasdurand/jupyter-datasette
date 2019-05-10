@@ -1,4 +1,4 @@
-from notebook.utils import _url_path_join
+from notebook.utils import url_path_join as _url_path_join
 from notebook.base.handlers import IPythonHandler
 import sys as _sys
 import os as _os
