@@ -57,7 +57,7 @@ def start_datasette(db_path, show_errors=True, **kwargs):
 # Pandas DataFrame to Datasette
 def pandas_to_datasette(df, name='this', table_name='table', db_root='./', if_exists='replace', show_errors=True, **kwargs):
     # create the DB from csv
-    db_name = pandas_to_sqlite(name, table_name, db_root, if_exists) 
+    db_name = pandas_to_sqlite(df, name, table_name, db_root, if_exists) 
     # now to launch it ...
     return start_datasette(os.path.join(db_root,db_path), show_errors=True, **kwargs)
 
