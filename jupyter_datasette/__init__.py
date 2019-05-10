@@ -29,6 +29,7 @@ class Datasette():
     def __init__(self, files=[], folder=None, logging=False, jupyter=True, **kwargs):
         self.files =  files
         self.path = folder
+        self.logging = logging
         self.jupyter = jupyter
         self._launch()
 
