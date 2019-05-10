@@ -42,7 +42,7 @@ def start_datasette(db_path, show_errors=True, **kwargs):
     flags = [f'--{key}' if value is True else f'--{key} {value}' for key,value in kwargs.items()]
     flags = ' '.join(flags)
     cmd = f'datasette {db_path} {flags}'
-    _display(_HTML(f'''<b>Datasette Launching at <a target="_blank" href="{host}:{port}">{host}:{port}</a></b>'''))
+    _display(_HTML(f'''<b>Datasette Launching at <a target="_blank" href="http://{host}:{port}">http://{host}:{port}</a></b>'''))
     try:
         process = _subprocess.Popen(cmd.split(' '), stderr=_subprocess.PIPE, stdout=_subprocess.PIPE)
         if show_errors:
