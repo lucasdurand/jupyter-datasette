@@ -15,7 +15,7 @@ def find_free_port():
         return s.getsockname()[1]
 
 # Let's keep this simple for now, unfortunately can't use csvs-to-sqlite to do more intricate setup (cli only)
-def pandas_to_sqlite(df, name, table_name, db_root, if_exists, **kwargs):
+def pandas_to_sqlite(df, name='this', table_name='table', db_root='./', if_exists='replace', **kwargs):
     '''
         DataFrame -> SQLite db
 
@@ -55,9 +55,11 @@ def start_datasette(db_path, show_errors=True, **kwargs):
         process.kill()
 
 # Pandas DataFrame to Datasette
-def pandas_to_datasette(df, name='this', table_name='table', db_root='./', if_exists='replace', **kwargs):
-    db_name = pandas_to_sqlite(*args, **kwargs) 
+def pandas_to_datasette(df, name='this', table_name='table', db_root='./', if_exists='replace', show_errors=True, **kwargs):
+    # create the DB from csv
+    db_name = pandas_to_sqlite(name, table_name, db_root, if_exists) 
     # now to launch it ...
+    return start_datasette(os.path.join(db_root,db_path), show_errors=True, **kwargs)
 
 
 # TODO: register Jupyter Magic
