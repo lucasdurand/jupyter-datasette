@@ -19,6 +19,10 @@ def pandas_to_datasette(df, name='this', table_name='table', db_root='./', if_ex
     # now to launch it ...
     return Datasette(db_name, jupyter=True, logging=logging, **kwargs)
     
+
+# Publish Pandas DataFrame to Jupyter-Datasette Home
+
+
 # TODO: register Jupyter Magic
 
 class Datasette():
@@ -77,6 +81,7 @@ class _DatasetteHandler(IPythonHandler):
 
         if self.get_arguments('reload'):
             datasette.reload()
+            return
         else:
             port = datasette.port
             host = datasette_host if datasette_host else _socket.gethostbyname(_socket.gethostname())

@@ -5,6 +5,7 @@ define(['jquery', 'base/js/utils'], function ($, utils) {
         var base_url = utils.get_body_data('baseUrl');
         $.get(`${base_url}/datasette?reload`, success= function(resp){                
             // refresh iframe
+            console.log("refreshing");
             $("#datasette_iframe").attr('src',$("#datasette_iframe").attr('src'));
         })
     }
@@ -22,7 +23,7 @@ define(['jquery', 'base/js/utils'], function ($, utils) {
 
         var datasette_ui = $('<iframe/>')
             .attr('id','datasette_iframe')
-            .attr('src',`${base_url}/datasette`)
+            .attr('src',`${base_url}datasette`)
             .attr('style','height:85vh;border:None;')
             .attr('width','100%');
 
