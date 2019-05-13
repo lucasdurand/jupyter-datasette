@@ -23,9 +23,16 @@ def pandas_to_datasette(df, name='this', table_name='table', db_root='./', if_ex
     
 
 # Publish Pandas DataFrame to Jupyter-Datasette Home
+def publish_to_datasette(df, name='this', table_name='table', db_root=datasette_path):
+    db_path = tools.pandas_to_sqlite(df, name, table_name, db_root)
+    _display(_HTML(f'''<div class="alert alert-info">DataFrame sent to Jupyter Datasette folder as:
+    <ul>
+        <li><b>db</b>: {name}</li>
+        <li><b>table</b>: {table_name}</li>
+    </ul>
+        <i>Reload Datasette to pick up new files</i></div>'''))
 
-
-# TODO: register Jupyter Magic
+# TODO: Jupyter Magic
 
 class Datasette():
     '''

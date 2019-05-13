@@ -46,8 +46,8 @@ def start_datasette(db_path, jupyter, **kwargs):
     cmd = re.sub(' +', ' ', cmd)
 
     if jupyter:
-        _display(_HTML(f'''<b>Datasette Launching at <a target="_blank" href="http://{host}:{port}">http://{host}:{port}</a></b><br/>
-            <pre>{cmd}</pre>'''))
+        _display(_HTML(f'''<div class="alert alert-info><b>Datasette Launching at <a target="_blank" href="http://{host}:{port}">http://{host}:{port}</a></b><br/>
+            <pre>{cmd}</pre></div>'''))
     try:
         process = _subprocess.Popen(cmd.split(' '), stderr=_subprocess.PIPE, stdout=_subprocess.PIPE)
         return process
