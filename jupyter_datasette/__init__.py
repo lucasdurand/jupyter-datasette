@@ -36,6 +36,7 @@ class Datasette():
         self.logging = logging
         self.jupyter = jupyter
         self._launch()
+        return
 
     def reload(self):
         '''Terminate existing Datasette process and start on another available port'''
@@ -62,7 +63,9 @@ class Datasette():
                 for line in iter(self.process.stderr.readline, b''):
                     _sys.stdout.write(line)
             except: # KeyboardInterrupt or some other calamity
-                self.process.terminate()     
+                self.process.terminate()    
+
+        return 
 
     def kill(self):
         self.process.terminate()
