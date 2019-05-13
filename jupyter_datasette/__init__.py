@@ -10,6 +10,8 @@ from IPython.display import HTML as _HTML
 datasette_path = _os.environ.get('DATASETTE_HOME',_os.path.expanduser('~/Datasette'))
 datasette_host = _os.environ.get('DATASETTE_HOST',None) # provide a static hostname to keep users happy
 
+_os.makedirs(datasette_path, exist_ok=True)
+
 from . import tools
 
 # Pandas DataFrame to Datasette
@@ -36,7 +38,6 @@ class Datasette():
         self.logging = logging
         self.jupyter = jupyter
         self._launch()
-        return
 
     def reload(self):
         '''Terminate existing Datasette process and start on another available port'''
@@ -44,7 +45,6 @@ class Datasette():
         # TODO: can we run this from a service that detects newly added files?
         self.kill()
         self._launch()
-        return
 
     def _launch(self):
         '''Only to be called directly in __init__ for first launch'''
@@ -65,12 +65,9 @@ class Datasette():
             except: # KeyboardInterrupt or some other calamity
                 self.process.terminate()    
 
-        return 
-
     def kill(self):
         self.process.terminate()
         self.process.wait()
-        return
 
     def __del__(self):
         self.kill()

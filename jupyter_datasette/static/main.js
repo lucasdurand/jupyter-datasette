@@ -18,7 +18,7 @@ define(['jquery', 'base/js/utils'], function ($, utils) {
         var datasette_refresh = $('<button/>')
             .text("New Files? Reload Datasette")
             .addClass('btn btn-default')
-            .on('click', reload());
+            .on('click', reload);
 
 
         var datasette_ui = $('<iframe/>')
