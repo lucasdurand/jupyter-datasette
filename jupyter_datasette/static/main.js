@@ -3,10 +3,12 @@ define(['jquery', 'base/js/utils'], function ($, utils) {
     function reload () {
         // call ?reload on /datasette
         var base_url = utils.get_body_data('baseUrl');
-        $.get(`${base_url}/datasette?reload`, success= function(resp){                
+        $.get(`${base_url}/datasette?reload`, success = function(resp){                
             // refresh iframe
-            console.log("refreshing");
-            $("#datasette_iframe").attr('src',$("#datasette_iframe").attr('src'));
+            // FIX ME: please wait until the server is available before setting (i.e. tools.start_datasette with pexpect)
+            setTimeout( function(){
+                $("#datasette_iframe").attr('src',$("#datasette_iframe").attr('src'))
+            },1000);
         })
     }
 
